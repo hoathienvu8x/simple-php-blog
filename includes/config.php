@@ -3,13 +3,13 @@ ob_start();
 session_start();
 
 //database credentials
-define('DBHOST','localhost');
-define('DBUSER','username');
-define('DBPASS','password');
-define('DBNAME','database name');
+define('DB_HOST','localhost');
+define('DB_USER','username');
+define('DB_PASSWD','password');
+define('DB_NAME','database name');
 
-$db = new PDO("mysql:host=".DBHOST.";port=8889;dbname=".DBNAME, DBUSER, DBPASS);
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db = Database::getInstance();;
+
 
 
 //set timezone
@@ -21,13 +21,13 @@ function __autoload($class) {
    $class = strtolower($class);
 
    //if call from within assets adjust the path
-   $classpath = 'classes/class.'.$class . '.php';
+   $classpath = dirname(__FILE__) . '/classes/class.'.$class . '.php';
    if ( file_exists($classpath)) {
       require_once $classpath;
    }  
    
    //if call from within admin adjust the path
-   $classpath = '../classes/class.'.$class . '.php';
+   $classpath = INAPP . '/classes/class.'.$class . '.php';
    if ( file_exists($classpath)) {
       require_once $classpath;
    }
